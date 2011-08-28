@@ -1,0 +1,30 @@
+<project name="Pentaho Additional Formulas" basedir="." default="main">
+	<property file="build.properties" />
+	
+	<path id="classpath">
+		<fileset dir="${lib.dir}" includes="**/*.jar" />
+	</path>
+	
+	<target name="clean">
+		<delete dir="build" />
+	</target>
+  
+	<target name="compile">
+		<mkdir dir="${classes.dir}"/>
+		<javac srcdir="${src.dir}" destdir="${classes.dir}" classpathref="classpath"/>    
+	</target>
+	
+	<target name="jar">
+		<mkdir dir="${jar.dir}"/>
+		<jar destfile="${jar.dir}/pentaho-additional-formulas.jar" basedir="${classes.dir}">
+			<manifest>
+				<attribute name="Main-Class" value="org.pentaho.reporting.libraries.formula.function.datetime.QuarterFunction"/>
+			</manifest>
+			<fileset dir="src" >
+				<include name="**/*.properties" />
+			</fileset>
+		</jar>
+	</target>
+	
+	<target name="main" depends="clean,compile,jar" />
+</project>
